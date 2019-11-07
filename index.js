@@ -119,8 +119,8 @@ function generateNewEntry(hint) {
     return parseInt(hint.slice(offset, offset+len), 16);
   };
   const toTitle = str => str.split(/\s+/).slice(0, 5).join(' ');
-  const hints = hint.split('').map(s => parseInt(s, 16));
   const title = toTitle(getIpsumParagraph(getSeed(0, 7)));
+  const date = (new Date((new Date('2000-01-01T00:00:00'))*1 + getSeed(9, 7)*1000)).toISOString();
   const numOfParagraph = getSeed(7, 2) + 1;
   const body = Array(numOfParagraph).fill(1).map((_, i) => {
     const seed = getSeed(9+i, 7);
@@ -132,7 +132,7 @@ function generateNewEntry(hint) {
     return text;
   }).join('\n\n');
 
-  return `# ${title}\n\n${body}\n`;
+  return `---\ntitle: ${title}\ndate: ${date}\n---\n${body}\n`;
 }
 
 //============================================================================
@@ -140,7 +140,11 @@ function generateNewEntry(hint) {
 function generateNewBlog(numOfEntries, salt) {
   for (let i=0; i<numOfEntries; i++) {
     console.log('==================================================');
-    console.log(generateNewEntry(getHash(salt + i)));
+    const data = generateNewEntry(getHash(salt + i));
+    const title = data.split('\n')[1].replace(/^title: /, '');
+    const name = title.replace(/\W+$/, '').replace(/\W/g, '-').toLowerCase();
+    console.log(`NAME: ${name}`);
+    console.log(data);
   }
 }
 
