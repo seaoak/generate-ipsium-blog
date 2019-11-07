@@ -111,15 +111,19 @@ function generateNewEntry(hint) {
   assert(hint.length === 160/4); // SHA-1
   const getSeed = (offset, len) => {
     assert(0 < len && len < 8);
-    assert(0 <= offset && offset+len <= hint.length);
+    assert(0 <= offset);
+    if (offset+len > hint.length) {
+      hint += getHash(hint); // extend
+      return getSeed(offset, len);
+    }
     return parseInt(hint.slice(offset, offset+len), 16);
   };
   const toTitle = str => str.split(/\s+/).slice(0, 5).join(' ');
   const hints = hint.split('').map(s => parseInt(s, 16));
   const title = toTitle(getIpsumParagraph(getSeed(0, 7)));
-  const numOfParagraph = getSeed(7, 1) + 1;
-  const body = Array(numOfParagraph).map((_, i) => {
-    const seed = getSeed(9+i, 4);
+  const numOfParagraph = getSeed(7, 2) + 1;
+  const body = Array(numOfParagraph).fill(1).map((_, i) => {
+    const seed = getSeed(9+i, 7);
     const text = getIpsumParagraph(seed);
     const isHeadding = seed % 7 == 0;
     if (isHeadding) {
