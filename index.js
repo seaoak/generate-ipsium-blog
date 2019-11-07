@@ -97,10 +97,10 @@ function outputNewEntryAsync(name, text, assets) {
   const fullpath = destDir + name + '.md';
   assert(! assets); // not implemented yet
   return new Promise((resolve, reject) => {
-    util.promisify(fs.stat)(name).then(() => {
+    util.promisify(fs.stat)(fullpath).then(() => {
       reject(new Error(`file ${fullpath} aldready exist`));
     }).catch(() => {
-      util.promisify(fs.writeFile)(name, text).then(() => resolve()).catch(err => reject(err));
+      util.promisify(fs.writeFile)(fullpath, text).then(() => resolve()).catch(err => reject(err));
     });
   });
 }
@@ -138,6 +138,7 @@ function generateNewEntry(hint) {
 //============================================================================
 
 function generateNewBlog(numOfEntries, salt) {
+  const list = [];
   for (let i=0; i<numOfEntries; i++) {
     console.log('==================================================');
     const data = generateNewEntry(getHash(salt + i));
@@ -145,7 +146,9 @@ function generateNewBlog(numOfEntries, salt) {
     const name = title.replace(/\W+$/, '').replace(/\W/g, '-').toLowerCase();
     console.log(`NAME: ${name}`);
     console.log(data);
+    list.push(outputNewEntryAsync(name, data, null));
   }
+  Promise.all(list).then(() => console.log('Complete.')).catch(err => console.log(err));
 }
 
 console.log(getIpsumParagraph(33));
