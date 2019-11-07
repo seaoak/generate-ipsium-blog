@@ -1,2 +1,5 @@
-# generate-ipsium-blog
-Generate dummy blog for testing Hexo with Ipsum
+# ipsium-blog-generator
+
+Generate dummy blog entries with Ipsum.
+
+Intended to be used for testing [Hexo](https://hexo.io).
