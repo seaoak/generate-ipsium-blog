@@ -98,7 +98,7 @@ function outputNewEntryAsync(name, text, assets) {
   assert(! assets); // not implemented yet
   return new Promise((resolve, reject) => {
     util.promisify(fs.stat)(fullpath).then(() => {
-      reject(new Error(`file ${fullpath} aldready exist`));
+      reject(new Error(`file ${fullpath} already exist`));
     }).catch(() => {
       util.promisify(fs.writeFile)(fullpath, text).then(() => resolve()).catch(err => reject(err));
     });
