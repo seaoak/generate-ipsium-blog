@@ -4,6 +4,7 @@
   "description": "Generate dummy blog entries with Ipsum.",
   "main": "index.js",
   "scripts": {
+    "eslint": "eslint ./index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/seaoak/ipsum-blog-generator/issues"
   },
-  "homepage": "https://github.com/seaoak/ipsum-blog-generator#readme"
+  "homepage": "https://github.com/seaoak/ipsum-blog-generator#readme",
+  "dependencies": {
+    "lorem-ipsum": "^2.0.3"
+  }
 }
