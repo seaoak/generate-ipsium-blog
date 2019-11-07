@@ -141,9 +141,10 @@ function generateNewBlog(numOfEntries, salt) {
   const list = [];
   for (let i=0; i<numOfEntries; i++) {
     console.log('==================================================');
-    const data = generateNewEntry(getHash(salt + i));
+    const hash = getHash(salt + i);
+    const data = generateNewEntry(hash);
     const title = data.split('\n')[1].replace(/^title: /, '');
-    const name = title.replace(/\W+$/, '').replace(/\W/g, '-').toLowerCase();
+    const name = hash; // title.replace(/\W+$/, '').replace(/\W/g, '-').toLowerCase();
     console.log(`NAME: ${name}`);
     console.log(data);
     list.push(outputNewEntryAsync(name, data, null));
@@ -157,4 +158,4 @@ console.log(getIpsumParagraph(34));
 console.log('==================================================');
 console.log(getIpsumParagraph(33));
 console.log('==================================================');
-generateNewBlog(10, 'foobar');
+generateNewBlog(3000, 'foobar');
