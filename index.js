@@ -74,10 +74,10 @@ function getIpsumParagraph(seed) {
     count: 1,
     format: "plain",
     paragraphLowerBound: 3,
-    paragraphUpperBound: 7,
+    paragraphUpperBound: 10,
     random: generatePRNG(seed),
     sentenceLowerBound: 5,
-    sentenceUpperBound: 15,
+    sentenceUpperBound: 20,
     suffix: "\n\n",
     units: "paragraph"
   });
