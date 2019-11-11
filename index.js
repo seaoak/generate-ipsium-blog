@@ -146,16 +146,21 @@ function generateNewBlog(numOfEntries, salt) {
     const title = data.split('\n')[1].replace(/^title: /, '');
     const name = hash; // title.replace(/\W+$/, '').replace(/\W/g, '-').toLowerCase();
     console.log(`NAME: ${name}`);
-    console.log(data);
+//    console.log(data);
     list.push(outputNewEntryAsync(name, data, null));
   }
   Promise.all(list).then(() => console.log('Complete.')).catch(err => console.log(err));
 }
 
-console.log(getIpsumParagraph(33));
-console.log('==================================================');
-console.log(getIpsumParagraph(34));
-console.log('==================================================');
-console.log(getIpsumParagraph(33));
-console.log('==================================================');
-generateNewBlog(3000, 'foobar');
+if (false) {
+  console.log(getIpsumParagraph(33));
+  console.log('==================================================');
+  console.log(getIpsumParagraph(34));
+  console.log('==================================================');
+  console.log(getIpsumParagraph(33));
+  console.log('==================================================');
+}
+
+const numOfEntries = process.argv[2] || 2000;
+const salt = process.argv[3] || 'foobar';
+generateNewBlog(numOfEntries, salt);
